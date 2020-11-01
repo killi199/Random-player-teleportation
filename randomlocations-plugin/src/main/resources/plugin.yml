@@ -4,3 +4,13 @@ author: killi199
 main: de.killi199.plugin.RandomLocations
 api-version: 1.16
 website: killi199.de
+
+commands:
+  startTimer:
+    aliases:
+      - starttimer
+    description: Starts the timer
+  stopTimer:
+    aliases:
+      - starttimer
+    description: Stops the timer

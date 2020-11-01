@@ -1,20 +1,32 @@
 package de.killi199.plugin;
 
-import org.bukkit.Bukkit;
-import org.bukkit.event.Listener;
-import org.bukkit.plugin.PluginManager;
+import de.killi199.plugin.Commands.StartCommand;
+import de.killi199.plugin.Commands.StopCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class RandomLocations extends JavaPlugin implements Listener {
+public class RandomLocations extends JavaPlugin {
+    private RunnableManager runnableManager;
+
     @Override
     public void onEnable() {
+        getServer().getPluginManager().registerEvents(new TimerListener(), this);
+        runnableManager = new RunnableManager();
+        runnableManager.runTaskTimer(this, 0, 20);
+        initializeCommands();
         System.out.println("RandomLocations enabled");
-        PluginManager pluginManager = Bukkit.getServer().getPluginManager();
-        pluginManager.registerEvents(this, this);
     }
 
     @Override
     public void onDisable() {
         System.out.println("RandomLocations disabled");
+    }
+
+    public RunnableManager getRunnableManager() {
+        return runnableManager;
+    }
+
+    private void initializeCommands(){
+        new StopCommand(this);
+        new StartCommand(this);
     }
 }

@@ -3,22 +3,20 @@ package de.killi199.plugin;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Collection;
 import java.util.Iterator;
 
 public class RunnableManager extends BukkitRunnable {
-    int leftTime = TIME_BETWEEN_LOCATION_CHANGE;
-    Plugin plugin;
+    private int leftTime = TIME_BETWEEN_LOCATION_CHANGE;
+    private boolean isRunning = false;
 
-    public RunnableManager(Plugin plugin){
-        this.plugin = plugin;
-    }
-
-    @Override
     public void run(){
+        if(!isRunning){
+            return;
+        }
+
         if(leftTime % 10 == 0){
             System.out.println("Left time: " + leftTime + " seconds");
         }
@@ -50,6 +48,23 @@ public class RunnableManager extends BukkitRunnable {
         }
 
         leftTime -=1;
+    }
+
+    public void startRunnable(){
+        resetTime();
+        isRunning = true;
+    }
+
+    public void stopRunnable(){
+        isRunning = false;
+    }
+
+    public boolean isRunning(){
+        return isRunning;
+    }
+    
+    public void resetTime(){
+        leftTime = TIME_BETWEEN_LOCATION_CHANGE;
     }
 
     // in seconds
