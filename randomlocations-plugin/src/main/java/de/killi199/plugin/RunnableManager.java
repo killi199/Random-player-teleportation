@@ -5,8 +5,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.Collection;
-import java.util.Iterator;
+import java.util.*;
 
 public class RunnableManager extends BukkitRunnable {
     private int leftTime;
@@ -22,31 +21,14 @@ public class RunnableManager extends BukkitRunnable {
         if(!isRunning){
             return;
         }
+        printLeftTime();
 
-        if(leftTime % 10 == 0){
-            System.out.println("Left time: " + leftTime + " seconds");
-        }
-        if(leftTime <= 10){
-            Bukkit.broadcastMessage("Left time: " + leftTime + " seconds");
-        }
         if(leftTime <= 0){
             leftTime = timeBetweenLocationChange;
             if(Bukkit.getOnlinePlayers().size() >= 2){
-                Collection<? extends Player> players = Bukkit.getOnlinePlayers();
-                Iterator<? extends Player> playerIterator = players.iterator();
-                Player lastPlayer = playerIterator.next();
-                String firstPlayerName = lastPlayer.getName();
-                Location firstPlayerLocation = lastPlayer.getLocation();
-                while(playerIterator.hasNext()){
-                    Player currentPlayer = playerIterator.next();
-                    System.out.println(currentPlayer.getName());
-                    lastPlayer.teleport(currentPlayer);
-                    lastPlayer.sendMessage("You changed your position with " + currentPlayer.getName());
-                    lastPlayer = currentPlayer;
-                }
-
-                lastPlayer.teleport(firstPlayerLocation);
-                lastPlayer.sendMessage("You changed your position with " + firstPlayerName);
+                List<Player> players = convertToCollection(Bukkit.getOnlinePlayers());
+                Collections.shuffle(players);
+                changeAllPositions(players);
             }
             else{
                 Bukkit.broadcastMessage("Not the correct player count: " + Bukkit.getOnlinePlayers().size());
@@ -75,5 +57,39 @@ public class RunnableManager extends BukkitRunnable {
 
     public void setTimeBetweenLocationChange(int timeBetweenLocationChange) {
         this.timeBetweenLocationChange = timeBetweenLocationChange;
+    }
+
+    private void printLeftTime(){
+        if(leftTime % 10 == 0){
+            System.out.println("Left time: " + leftTime + " seconds");
+        }
+        if(leftTime <= 10){
+            Bukkit.broadcastMessage("Left time: " + leftTime + " seconds");
+        }
+    }
+
+    private List<Player> convertToCollection(Collection<? extends Player> collection){
+        List<Player> players = new ArrayList<>();
+        for(Player pl: collection){
+            players.add(pl);
+        }
+        return players;
+    }
+
+    private void changeAllPositions(List<Player> players){
+        Iterator<Player> playerIterator = players.iterator();
+        Player lastPlayer = playerIterator.next();
+        String firstPlayerName = lastPlayer.getName();
+        Location firstPlayerLocation = lastPlayer.getLocation();
+        while(playerIterator.hasNext()){
+            Player currentPlayer = playerIterator.next();
+            System.out.println(currentPlayer.getName());
+            lastPlayer.teleport(currentPlayer);
+            lastPlayer.sendMessage("You changed your position with " + currentPlayer.getName());
+            lastPlayer = currentPlayer;
+        }
+
+        lastPlayer.teleport(firstPlayerLocation);
+        lastPlayer.sendMessage("You changed your position with " + firstPlayerName);
     }
 }
