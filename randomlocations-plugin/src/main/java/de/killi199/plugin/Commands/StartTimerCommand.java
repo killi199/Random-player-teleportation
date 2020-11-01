@@ -8,11 +8,11 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class StartCommand implements CommandExecutor {
+public class StartTimerCommand implements CommandExecutor {
 
     private final RandomLocations plugin;
 
-    public StartCommand(RandomLocations plugin){
+    public StartTimerCommand(RandomLocations plugin){
         this.plugin = plugin;
         plugin.getCommand("startTimer").setExecutor(this);
     }
