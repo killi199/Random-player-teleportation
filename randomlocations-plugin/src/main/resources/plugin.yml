@@ -14,3 +14,7 @@ commands:
     aliases:
       - starttimer
     description: Stops the timer
+  setTimer:
+    aliases:
+      - settimer
+    description: Sets the timer in seconds

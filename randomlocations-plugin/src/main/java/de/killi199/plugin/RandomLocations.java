@@ -1,6 +1,6 @@
 package de.killi199.plugin;
 
-import de.killi199.plugin.Commands.StartCommand;
+import de.killi199.plugin.Commands.SetTimerCommand;
 import de.killi199.plugin.Commands.StartTimerCommand;
 import de.killi199.plugin.Commands.StopTimerCommand;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -29,5 +29,6 @@ public class RandomLocations extends JavaPlugin {
     private void initializeCommands(){
         new StopTimerCommand(this);
         new StartTimerCommand(this);
+        new SetTimerCommand(this);
     }
 }

@@ -9,8 +9,14 @@ import java.util.Collection;
 import java.util.Iterator;
 
 public class RunnableManager extends BukkitRunnable {
-    private int leftTime = TIME_BETWEEN_LOCATION_CHANGE;
+    private int leftTime;
     private boolean isRunning = false;
+    // in seconds
+    private int timeBetweenLocationChange = 300;
+
+    public RunnableManager(){
+        leftTime = timeBetweenLocationChange;
+    }
 
     public void run(){
         if(!isRunning){
@@ -24,7 +30,7 @@ public class RunnableManager extends BukkitRunnable {
             Bukkit.broadcastMessage("Left time: " + leftTime + " seconds");
         }
         if(leftTime <= 0){
-            leftTime = TIME_BETWEEN_LOCATION_CHANGE;
+            leftTime = timeBetweenLocationChange;
             if(Bukkit.getOnlinePlayers().size() >= 2){
                 Collection<? extends Player> players = Bukkit.getOnlinePlayers();
                 Iterator<? extends Player> playerIterator = players.iterator();
@@ -52,21 +58,22 @@ public class RunnableManager extends BukkitRunnable {
 
     public void startRunnable(){
         resetTime();
-        isRunning = true;
+        this.isRunning = true;
     }
 
     public void stopRunnable(){
-        isRunning = false;
+        this.isRunning = false;
     }
 
     public boolean isRunning(){
-        return isRunning;
-    }
-    
-    public void resetTime(){
-        leftTime = TIME_BETWEEN_LOCATION_CHANGE;
+        return this.isRunning;
     }
 
-    // in seconds
-    private static final int TIME_BETWEEN_LOCATION_CHANGE = 300;
+    public void resetTime(){
+        this.leftTime = this.timeBetweenLocationChange;
+    }
+
+    public void setTimeBetweenLocationChange(int timeBetweenLocationChange) {
+        this.timeBetweenLocationChange = timeBetweenLocationChange;
+    }
 }
