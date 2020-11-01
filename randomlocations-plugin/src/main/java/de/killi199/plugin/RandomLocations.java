@@ -11,7 +11,6 @@ public class RandomLocations extends JavaPlugin implements Listener {
         System.out.println("RandomLocations enabled");
         PluginManager pluginManager = Bukkit.getServer().getPluginManager();
         pluginManager.registerEvents(this, this);
-        new RunnableManager(this).runTaskTimer(this, 0, 20);
     }
 
     @Override
