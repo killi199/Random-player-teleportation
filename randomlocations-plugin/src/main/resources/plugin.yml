@@ -1,0 +1,6 @@
+name: RandomLocations
+version: 1.0
+author: killi199
+main: de.killi199.plugin.RandomLocations
+api-version: 1.16
+website: killi199.de
