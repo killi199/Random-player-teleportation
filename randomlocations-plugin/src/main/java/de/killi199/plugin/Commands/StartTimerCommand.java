@@ -25,7 +25,7 @@ public class StartTimerCommand implements CommandExecutor {
         }
         else{
             runnableManager.startRunnable();
-            Bukkit.broadcastMessage("Timer started");
+            Bukkit.broadcastMessage("Timer started by " + commandSender.getName());
             return true;
         }
     }

@@ -21,7 +21,7 @@ public class StopTimerCommand implements CommandExecutor {
         RunnableManager runnableManager = plugin.getRunnableManager();
         if(runnableManager.isRunning()){
             runnableManager.stopRunnable();
-            Bukkit.broadcastMessage("Timer stopped");
+            Bukkit.broadcastMessage("Timer stopped by " + commandSender.getName());
             return true;
         }
         else{
